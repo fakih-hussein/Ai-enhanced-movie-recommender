@@ -18,19 +18,59 @@ await page.setExtraHTTPHeaders({
   
   await page.waitForSelector(".row .card-screening .h3 a", { timeout: 1000000 });
   const nameNodes = await page.$$(".row .card-screening .h3 a");
-  
+  const linkTitles = []
   for (let nameNode of nameNodes) {
-    // Extract text or any other property
-    const text = await page.evaluate((el) => {
+    
+    const linkTitle = await page.evaluate((el) => {
       return {
         link: el.getAttribute("href"),
         name: el.innerHTML,
       };
     }, nameNode);
+
+    linkTitles.push(linkTitle)
+
+   
   
-    console.log(text);
+    
   }
 
+  const domain = "https://www.pathe.fr"
+  for (let linkTitle of linkTitles){
+
+    console.log(domain+linkTitle.link);
+
+    await page.goto(domain+linkTitle.link);
+
+    await page.waitForSelector(".container .hero-film__content .hero-film__body a[role='button']");
+
+    const moreInfoNode = await page.$(".container .hero-film__content .hero-film__body a[role='button']");
+
+    await moreInfoNode.click()
+    
+    await page.waitForSelector(".modal .container .row .ft-primary")
+
+    const descriptionNode  = await page.$(".modal .container .row .ft-primary")
+
+    const description = await page.evaluate((el) => el.innerHTML
+       
+      , descriptionNode )
+
+    console.log(description)
+
+
+
+
+
+
+    //console.log(moreInfoNode)
+
+
+  }
+
+  
+
+  
 
 
 await browser.close();
