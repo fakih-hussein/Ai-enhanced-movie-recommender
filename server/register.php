@@ -5,7 +5,7 @@
     $email = $_POST["email"];
     $password = $_POST["password"];
 
-    $hashed = password_hash($password, PASSWORD_BCRYPT);
+    $hashed = password_hash($password, PASSWORD_DEFAULT);
 
     $query = $connection->prepare("INSERT INTO users(username, email, password,user_type) values(?,?,?,1)");
     $query->bind_param("sss", $username, $email, $hashed);
