@@ -38,7 +38,7 @@ await page.setExtraHTTPHeaders({
   const domain = "https://www.pathe.fr"
   for (let linkTitle of linkTitles){
 
-    console.log(domain+linkTitle.link);
+    //console.log(domain+linkTitle.link);
 
     await page.goto(domain+linkTitle.link);
 
@@ -56,17 +56,34 @@ await page.setExtraHTTPHeaders({
        
       , descriptionNode )
 
-    console.log(description)
+    await page.waitForSelector(".modal .container .row .c-white-50 li")  
+
+    const authorshipNodes  = await page.$$(".modal .container .row .c-white-50 li strong")
+    const authorships = []
+    for ( let authorshipNode of authorshipNodes){
+
+        const authorship = await page.evaluate((el) => el.innerHTML, authorshipNode)
+        authorships.push(authorship)
+
+}
+
+  const director = authorships[0]
+  console.log(director)
+  const cast = authorships[1]
+  console.log(cast)
+  const nationality = authorships[2]
+  console.log(nationality)
+    
+
+      
 
 
+    
+   
 
 
-
-
-    //console.log(moreInfoNode)
-
-
-  }
+   
+}
 
   
 
