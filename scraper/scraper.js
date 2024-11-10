@@ -58,31 +58,18 @@ await page.setExtraHTTPHeaders({
 
     await page.waitForSelector(".modal .container .row .c-white-50 li")  
 
-    const authorshipNodes  = await page.$$(".modal .container .row .c-white-50 li strong")
-    const authorships = []
-    for ( let authorshipNode of authorshipNodes){
-
-        const authorship = await page.evaluate((el) => el.innerHTML, authorshipNode)
-        authorships.push(authorship)
-
-}
-
-  const director = authorships[0]
-  console.log(director)
-  const cast = authorships[1]
-  console.log(cast)
-  const nationality = authorships[2]
-  console.log(nationality)
+    const directorNode  = await page.$(".modal .container .row .c-white-50 li strong")
+    
     
 
-      
+    const director = await page.evaluate((el) => el.innerHTML, directorNode)
+     
 
+    console.log(director)
 
     
-   
 
-
-   
+    
 }
 
   
