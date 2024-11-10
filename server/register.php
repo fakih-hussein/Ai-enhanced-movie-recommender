@@ -7,7 +7,8 @@
 
     $hashed = password_hash($password, PASSWORD_BCRYPT);
 
-    $query = $connection->prepare("INSERT INTO users(username, email, password,user_type) values($username,$email,$password,1)");
+    $query = $connection->prepare("INSERT INTO users(username, email, password,user_type) values(?,?,?,1)");
+    $query->bind_param("sss", $username, $email, $hashed);
     $query->execute();
     $result = $query->affected_rows;
 
