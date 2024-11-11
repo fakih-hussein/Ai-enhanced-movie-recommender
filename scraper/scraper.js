@@ -1,8 +1,9 @@
 import puppeteer from "puppeteer";
-
+import { writeFileSync } from "fs";
 const browser = await puppeteer.launch({
   headless: true,
-  browser:'firefox'
+  browser:"firefox"
+  
   
 });
 const page = await browser.newPage();
@@ -28,19 +29,23 @@ await page.setExtraHTTPHeaders(firefox);
   
   await page.goto("https://www.pathe.fr/cinemas/cinema-pathe-wilson");
   
-  await page.waitForSelector(".row .card-screening .h3 a");
-  const nameNodes = await page.$$(".row .card-screening .h3 a");
+  await page.waitForSelector(".card-screening__content");
+  const nameNodes = await page.$$(".card-screening__content");
   
   const linkTitles = []
   for (let nameNode of nameNodes) {
+    console.log(nameNodes.slice(0,2))
     
     const linkTitle = await page.evaluate((el) => {
       return {
-        link: el.getAttribute("href"),
-        name: el.innerHTML,
+        link: el.querySelector(".h3 a").getAttribute("href"),
+        name: el.querySelector(".h3 a").innerHTML,
+        imageLink: el.querySelector("img").getAttribute("src")
         
       };
     }, nameNode);
+
+    console.log(linkTitle)
 
     linkTitles.push(linkTitle)
 
@@ -51,6 +56,7 @@ await page.setExtraHTTPHeaders(firefox);
 
   const domain = "https://www.pathe.fr"
   for (let linkTitle of linkTitles){
+    //await new Promise(resolve => setTimeout(resolve, 15000));
 
     //console.log(domain+linkTitle.link);
 
@@ -62,27 +68,29 @@ await page.setExtraHTTPHeaders(firefox);
     
     
     
-    const duration = await page.evaluate((el) => el.innerHTML, durationNode[0])
+    linkTitle['duration'] = await page.evaluate((el) => el.innerHTML, durationNode[0])
 
-    const genre = await page.evaluate((el) => el.innerHTML, durationNode[1])
+    linkTitle['genre'] = await page.evaluate((el) => el.innerHTML, durationNode[1])
      
-
-    //console.log(duration)
-
-
-    
 
     await page.waitForSelector(".container .hero-film__content .hero-film__body a[role='button']");
 
     const moreInfoNode = await page.$(".container .hero-film__content .hero-film__body a[role='button']");
 
-    await moreInfoNode.click()
+
+    await new Promise(resolve => setTimeout(resolve, 5000));
+
+    //await moreInfoNode.click()
+
+    await page.evaluate((element) => {
+        element.click()
+      }, moreInfoNode)
     
     await page.waitForSelector(".modal .container .row .ft-primary")
 
     const descriptionNode  = await page.$(".modal .container .row .ft-primary")
 
-    const description = await page.evaluate((el) => el.innerHTML
+    linkTitle['description'] = await page.evaluate((el) => el.innerHTML
        
       , descriptionNode )
 
@@ -92,10 +100,10 @@ await page.setExtraHTTPHeaders(firefox);
     
     
 
-    const director = await page.evaluate((el) => el.innerHTML, directorNode)
+    linkTitle['director'] = await page.evaluate((el) => el.innerHTML, directorNode)
      
 
-    console.log(director)
+    console.log(linkTitle)
 
     
 
@@ -104,7 +112,9 @@ await page.setExtraHTTPHeaders(firefox);
 
   
 
-  
+const data = JSON.stringify(linkTitles)
+writeFileSync('output1.json', data);  
 
 
 await browser.close();
+
