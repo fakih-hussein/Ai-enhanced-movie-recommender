@@ -33,8 +33,8 @@ await page.setExtraHTTPHeaders(firefox);
   const nameNodes = await page.$$(".card-screening__content");
   
   const linkTitles = []
-  for (let nameNode of nameNodes) {
-    console.log(nameNodes.slice(0,2))
+  for (let nameNode of nameNodes.slice(0,22)) {
+    //console.log(nameNodes.slice(0,2))
     
     const linkTitle = await page.evaluate((el) => {
       return {
@@ -112,9 +112,27 @@ await page.setExtraHTTPHeaders(firefox);
 
   
 
-const data = JSON.stringify(linkTitles)
-writeFileSync('output1.json', data);  
+//const data = JSON.stringify(linkTitles)
+//writeFileSync('output1.json', data);  
 
 
-await browser.close();
+
+
+
+
+
+
+
+
+
+
+
+
+  const totalInfo = linkTitles
+  
+  const data = JSON.stringify(totalInfo)
+  writeFileSync('output1.json', data);  
+  
+  
+  await browser.close();
 
