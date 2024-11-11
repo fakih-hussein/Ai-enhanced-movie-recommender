@@ -2,8 +2,8 @@ import mysql from 'mysql'
 import { readFileSync } from "fs";
 
 
-const data = readFileSync('output1.json', 'utf8');
-const jsonData = JSON.parse(data);
+const jsondata = readFileSync('output1.json', 'utf8');
+const movies = JSON.parse(jsondata);
 //console.log(jsonData);
 
 
@@ -16,10 +16,29 @@ var con = mysql.createConnection({
 
 con.connect(function(err) {
   if (err) throw err;
-  
-  //var sql = "INSERT INTO movies (name, genre, duration, description, director, imageLink) VALUES ('','','','','','')";
   console.log("Connected!");
+  for (let movie of movies){
+
+  let sql = `INSERT INTO movies (name, genre, duration, description, director, imageLink) VALUES (?,?,?,?,?,?)`;
+  const values = [
+    movie.name,
+    movie.genre,
+    movie.duration,
+    movie.description,
+    movie.director,
+    movie.imageLink
+  ];
+   con.query(sql, values, function (err, result) {
+    if (err) throw err;
+    console.log("1 record inserted");
+
+  });
+
+   
+}
+
 });
+
 
 
 
