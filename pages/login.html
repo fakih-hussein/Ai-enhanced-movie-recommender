@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../styles/login.css">
 </head>
+
 <body>
     <div class="container">
 
@@ -13,28 +15,47 @@
             <img src="" class="MovieAi-logo">
         </header>
         <main>
-            <div class="login">
-                <form>
+            <!-- Login Form -->
+            <div class="login" id="login-form-container">
+                <form id="login-form">
                     <div class="login-box">
                         <h1 class="sign-in">Sign In</h1>
                         <div class="input-box">
-                            <img src="" alt="">
-                            <img src="../media/user-solid.svg" height="20" class="icons">
-                            <input type="text" placeholder="Email or Username" class="mlinput" name="">
+                            <img src="../media/user-solid.svg" height="20" class="icons" alt="User Icon">
+                            <input type="text" id="login-email" placeholder="Email or Username" class="mlinput"
+                                required>
                         </div>
                         <div class="input-box">
-                            <img src="../media/lock-solid.svg" height="20" class="icons">
-                            <input type="password" placeholder="Password" class="mlinput">
+                            <img src="../media/lock-solid.svg" height="20" class="icons" alt="Password Icon">
+                            <input type="password" id="login-password" placeholder="Password" class="mlinput" required>
                         </div>
-                        <a href="#" class="toMain"><input type="button" value="Sign In" class="login-button"></a>
-                        <div class="gethelp">
-                            <span class="login-text"><input type="checkbox">Remember me</span>
-                            <a href="#">Get help</a>
-                        </div>
-                        <p class="login-text">New to MovieAI <a href="#">Sign up now</a></p>
+                        <input type="submit" value="Sign In" class="login-button">
+                        <p class="login-text">New to MovieAI? <a href="#" id="show-register">Sign up now</a></p>
                     </div>
                 </form>
             </div>
+
+            <!-- Registration Form -->
+            <div class="register" id="register-form-container" style="display: none;">
+                <form id="register-form">
+                    <div class="register-box">
+                        <h1 class="sign-up">Sign Up</h1>
+                        <div class="input-box">
+                            <input type="text" id="register-username" placeholder="Username" class="mlinput" required>
+                        </div>
+                        <div class="input-box">
+                            <input type="email" id="register-email" placeholder="Email" class="mlinput" required>
+                        </div>
+                        <div class="input-box">
+                            <input type="password" id="register-password" placeholder="Password" class="mlinput"
+                                required>
+                        </div>
+                        <input type="submit" value="Register" class="register-button">
+                        <p class="login-text">Already have an account? <a href="#" id="show-login">Sign in now</a></p>
+                    </div>
+                </form>
+            </div>
+
         </main>
         <footer>
             <div class="footer">
@@ -50,5 +71,7 @@
             </ul>
         </footer>
     </div>
+    <script src="../scripts/login.js"></script>
 </body>
+
 </html>
