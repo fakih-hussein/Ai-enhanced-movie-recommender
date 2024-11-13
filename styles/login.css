@@ -34,6 +34,7 @@ body::-webkit-scrollbar {
 }
 .login-box {
     width: 260.1px;
+    margin:auto;
 }
 .input-box{
     margin: 1em 0em;
