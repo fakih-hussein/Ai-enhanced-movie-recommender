@@ -1,5 +1,5 @@
 document.getElementById('sendBtn').addEventListener('click',function(){
-    const UserInput=document.getElementById('userInput').ariaValueMax;
+    const UserInput=document.getElementById('userInput').value;
     if (UserInput.trim() !==""){
 
         appendMessage('user', userInput);
