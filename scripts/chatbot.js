@@ -1,11 +1,10 @@
-document.getElementById('sendBtn').addEventListener('click',function(){
-    const UserInput=document.getElementById('userInput').value;
-    if (UserInput.trim() !==""){
-
+document.getElementById('sendBtn').addEventListener('click', function() {
+    const userInput = document.getElementById('userInput').value;
+    if (userInput.trim() !== "") {
         appendMessage('user', userInput);
         document.getElementById('userInput').value = '';
 
-        fetch('../server/chatbot.php', {
+        fetch('./server/chatbot.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -19,7 +18,6 @@ document.getElementById('sendBtn').addEventListener('click',function(){
         .catch(error => {
             console.error('Error:', error);
         });
-
     }
 });
 
