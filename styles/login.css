@@ -9,7 +9,7 @@ body::-webkit-scrollbar {
 }
 
 .container{
-    background-image:linear-gradient(rgb(0,0,0,0.6),rgb(0,0,0,0.6)) , url() ;
+    background-image:linear-gradient(rgb(0,0,0,0.6),rgb(0,0,0,0.6)) , url(../media/netflix-bg2.avif) ;
     height: calc(100vh + 200px);
     width: 100%;
     background-position: center;

@@ -3,6 +3,7 @@ body {
     background-color: #f0f0f0;
     margin: 0;
     padding: 0;
+    background-image:linear-gradient(rgb(0,0,0,0.6),rgb(0,0,0,0.6)) , url(../media/Avg.jpg) ;
 }
 
 .chat-container {
