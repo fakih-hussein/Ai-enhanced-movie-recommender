@@ -14,7 +14,7 @@ document.getElementById('show-login').addEventListener('click',()=>{
 const loginForm=document.getElementById('login-form');
 console.log(loginForm);
 loginForm.addEventListener('submit' ,async(event)=>{
-    event.preventDefault;
+    event.preventDefault();
     const email=document.getElementById('login-email').value;
     console.log(email);
     const password=document.getElementById('login-password').value;
@@ -43,23 +43,21 @@ loginForm.addEventListener('submit' ,async(event)=>{
      }
  
 
-
-
 });
 
-const registorForm=document.getElementById('registor-form');
+const registorForm=document.getElementById('register-form');
 registorForm.addEventListener('click', async(event)=>{
     event.preventDefault();
     const username=document.getElementById('register-username').value;
     console.log(username);
-    const email=document.getElementById('resgistor-email').value;
+    const email=document.getElementById('resgister-email').value;
     console.log(email);
     const password=document.getElementById('register-password').value;
 
     if (!username || !email || !password) return;
     try{
         const response= await fetch('./server/registor.php',{
-            method:postMessage,
+            method:'POST',
             headers:{'Content-Type' : 'application/json'},
             body:JSON.stringify({username,email,password})
         });
