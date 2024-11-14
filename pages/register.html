@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Registration Form</title>
 </head>
-
 <body>
-    <div>
-        <input type="text" placeholder="Username" id="username">
-        <input type="email" placeholder="Email" id="email">
-        <input type="password" placeholder="Password" id="password">
-        <button id="register">Register</button>
-        <p>
-            Already have an account? <a href="./login.html">Log in</a>
-        </p>
-    </div>
-    <script 
-        src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"
-        integrity="sha512-DdX/YwF5e41Ok+AI81HI8f5/5UsoxCVT9GKYZRIzpLxb8Twz4ZwPPX+jQMwMhNQ9b5+zDEefc+dcvQoPWGNZ3g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"
-    ></script>
+    <h2>Register</h2>
+    <form id="registrationForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br><br>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br><br>
+        
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+        <br><br>
+        
+        <button type="submit">Register</button>
+    </form>
 
-    <script src="./../scripts/script.js"></script>
+    <p id="response"></p>
+
+    <script src="./../scripts/register.js"></script>
 </body>
-
 </html>
