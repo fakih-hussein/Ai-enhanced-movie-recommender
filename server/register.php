@@ -1,27 +1,37 @@
 <?php
-    include "connection.php";
+header("Content-Type: application/json");
 
-    $username = $_POST["username"];
-    $email = $_POST["email"];
-    $password = $_POST["password"];
+$input = json_decode(file_get_contents("php://input"), true);
+$username = $input['username'];
+$password = $input['password'];
 
-    $hashed = password_hash($password, PASSWORD_DEFAULT);
+$host = "localhost"; 
+$dbname = "movie_recommender_db"; 
+$dbuser = "root"; 
+$dbpass = ""; 
 
-    $query = $connection->prepare("INSERT INTO users(username, email, password,user_type) values(?,?,?,1)");
-    $query->bind_param("sss", $username, $email, $hashed);
-    $query->execute();
-    $result = $query->affected_rows;
+if (empty($username) || empty($password)) {
+    echo json_encode(["message" => "Username and password are required"]);
+    exit;
+}
 
-    if ($result!=0){
-        echo json_encode([
-            "status"=> "Register successful",
-            "message"=> "$result user(s) created",
-        ]);
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $dbuser, $dbpass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
+    $stmt->execute([$username]);
+    if ($stmt->rowCount() > 0) {
+        echo json_encode(["message" => "Username already taken"]);
+        exit;
     }
-    else{
-        echo json_encode([
-            "status"=> "Failed",
-            "message"=> "Could not create record",
-        ]);
-    }
-?>
+
+    $stmt = $pdo->prepare("INSERT INTO users (username, password, user_type_id) VALUES (?, ?, ?)");
+    $usertype = 2;
+    $stmt->execute([$username, $password, $usertype]);
+
+    echo json_encode(["message" => "Registration successful"]);
+} catch (PDOException $e) {
+    echo json_encode(["message" => "Error: " . $e->getMessage()]);
+}
